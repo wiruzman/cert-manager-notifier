@@ -1,0 +1,97 @@
+# Default values for cert-manager-notifier
+replicaCount: 1
+
+image:
+  repository: cert-manager-notifier
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# RBAC configuration
+rbac:
+  # Specifies whether RBAC resources should be created
+  create: true
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# Configuration for the cert-manager-notifier
+config:
+  # Webhook URLs (comma-separated)
+  webhookUrls: "https://hooks.slack.com/services/your/webhook/url"
+  
+  # Optional: Webhook headers for authentication
+  # webhookHeaders:
+  #   - webhook: 1
+  #     headers:
+  #       Authorization: "Bearer your-token"
+  #       Content-Type: "application/json"
+  
+  # Check interval (how often to check certificates)
+  checkInterval: "24h"
+  
+  # Expiration threshold (notify when certificates expire within this period)
+  expirationThreshold: "720h" # 30 days
+  
+  # Namespace to monitor (empty means all namespaces - recommended for cluster-wide monitoring)
+  namespace: ""
+  
+  # Log level
+  logLevel: "info"
+
+# Health check configuration
+healthCheck:
+  port: 8080
+  enabled: true
+
+# Resource limits and requests
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# Node selector
+nodeSelector: {}
+
+# Tolerations
+tolerations: []
+
+# Affinity
+affinity: {}
+
+# Environment variables
+env: []
+  # - name: CUSTOM_ENV_VAR
+  #   value: "custom-value"
+
+# Additional environment variables from secrets or configmaps
+envFrom: []
+  # - secretRef:
+  #     name: my-secret
+  # - configMapRef:
+  #     name: my-configmap

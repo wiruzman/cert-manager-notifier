@@ -1,0 +1,17 @@
+apiVersion: v2
+name: cert-manager-notifier
+description: A Kubernetes application for monitoring cert-manager certificates and sending webhook notifications
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - cert-manager
+  - certificates
+  - monitoring
+  - webhook
+  - notifications
+home: https://github.com/wiruzman/cert-manager-notifier
+maintainers:
+  - name: wiruzman
+    email: wiruzman@example.com
+dependencies: []

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "cert-manager-notifier.fullname" . }}
+  labels:
+    {{- include "cert-manager-notifier.labels" . | nindent 4 }}
+data:
+  WEBHOOK_URLS: {{ .Values.config.webhookUrls | quote }}
+  CHECK_INTERVAL: {{ .Values.config.checkInterval | quote }}
+  EXPIRATION_THRESHOLD: {{ .Values.config.expirationThreshold | quote }}
+  NAMESPACE: {{ .Values.config.namespace | quote }}
+  LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  HEALTH_PORT: {{ .Values.healthCheck.port | quote }}
